@@ -1,0 +1,9 @@
+listen: 3040
+memcached:
+  servers:
+    - localhost:11211
+  key:
+    prefix: 'GSPCP:_user_data:'
+gspcp: 'http://localhost:3000'
+debug: false
+proxy: ''

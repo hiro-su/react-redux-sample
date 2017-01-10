@@ -1,0 +1,7 @@
+npm-debug.log*
+node_modules
+webpack-assets.json
+public/assets/*
+
+.bundle
+.vscode

@@ -1,0 +1,337 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>API Spec</title></head><body><h1>gspcp-stream API</h1>
+
+<h2>Overview</h2>
+
+<p>ユーザへのサーバプッシュ機構を実現するためのストリームサーバです。
+ユーザ毎にストリームセッションを作成し、セッション状況確認のためのハートビートや申し込みのステータス情報などを送出します。</p>
+
+<h3>ユーザ向け/X-CSRF-TOKEN</h3>
+
+<p><a href="#link-POST-sessions-/sessions">POST /sessions</a> と <a href="#link-GET-sessions-/sessions/{(%23%2Fdefinitions%2Fsessions%2Fdefinitions%2Fid)}">GET /sessions/{sessions_id}</a>
+のみ表画面が生成した CSRF TOKEN を <code>X-CSRF-TOKEN</code> ヘッダーに付与してリクエストを投げる必要があります。
+これは表画面の利用者からのアクセスであることを確認するためです。</p>
+
+<h3>内部向け/Authorization</h3>
+
+<p><a href="#link-GET-back_sessions-/back/sessions">GET /back/sessions</a> と <a href="#link-DELETE-back_sessions-/back/sessions/{(%23%2Fdefinitions%2Fsessions%2Fdefinitions%2Fid)}">DELETE /back/sessions/{sessions_id}</a>
+ のみ認証用の <code>Authorization</code> ヘッダーが必要です。
+これは裏画面からの利用を想定しており、操作権限の有するユーザのみにアクセスを許可するためです。
+フォーマットは以下に示す通りです。</p>
+
+<pre><code>Authorization: Idaten {gspcp session id}:{user account}
+</code></pre>
+
+<h3>Errors</h3>
+
+<p>エラーは以下に示す共通のフォーマットで返却されます。</p>
+
+<h4>Error Attributes</h4>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>detail_code</strong></td>
+<td><em>string</em></td>
+<td>ステータスコード<br/> <strong>pattern:</strong> <code>^[0-9]{5}$</code></td>
+<td><code>&quot;20000&quot;</code></td>
+</tr>
+<tr>
+<td><strong>message:error</strong></td>
+<td><em>string</em></td>
+<td>エラー内容</td>
+<td><code>&quot;NG&quot;</code></td>
+</tr>
+</tbody></table>
+
+<h4>Error Response</h4>
+
+<pre><code>HTTP/1.1 404 Not Found
+</code></pre>
+
+<pre><code class="json">{
+  &quot;errorMsg&quot;: &quot;Invalid Session Id&quot;
+}
+</code></pre>
+
+<h3>Statuses</h3>
+
+<p>返却されるAPIレスポンスのステータスコードです。</p>
+
+<h4>Successful Responses</h4>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200 OK</td>
+<td>成功</td>
+</tr>
+<tr>
+<td>201 Created</td>
+<td>リソース作成</td>
+</tr>
+</tbody></table>
+
+<h4>Error Responses</h4>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400 Bad Request</td>
+<td>不正なリクエスト</td>
+</tr>
+<tr>
+<td>401 Unauthorized</td>
+<td>X-CSRF-TOKENヘッダーかAuthorizationヘッダーの値が間違っている</td>
+</tr>
+<tr>
+<td>403 Forbidden</td>
+<td>許可されないリクエスト</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>リソースが存在しない</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>予期せぬエラー</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>サーバープロセスが死んだ</td>
+</tr>
+<tr>
+<td>503 Service Unavailable</td>
+<td>サーバーが死んだ</td>
+</tr>
+</tbody></table>
+
+<h2>The table of contents</h2>
+
+<ul>
+<li><a href="#resource-back_sessions">内部向け/Sessions</a>
+
+<ul>
+<li><a href="#link-GET-back_sessions-/v1/back/sessions">GET /v1/back/sessions</a></li>
+<li><a href="#link-DELETE-back_sessions-/v1/back/sessions/{(%23%2Fdefinitions%2Fsessions%2Fdefinitions%2Fid)}">DELETE /v1/back/sessions/{sessions_id}</a></li>
+</ul></li>
+<li><a href="#resource-sessions">ユーザ向け/Sessions</a>
+
+<ul>
+<li><a href="#link-POST-sessions-/v1/sessions">POST /v1/sessions</a></li>
+<li><a href="#link-GET-sessions-/v1/sessions/{(%23%2Fdefinitions%2Fsessions%2Fdefinitions%2Fid)}">GET /v1/sessions/{sessions_id}</a></li>
+</ul></li>
+</ul>
+
+<h2><a name="resource-back_sessions">内部向け/Sessions</a></h2>
+
+<p>Stability: <code>prototype</code></p>
+
+<p>セッションを管理します</p>
+
+<h3>Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong><a href="#resource-sessions">session:id</a></strong></td>
+<td><em>uuid</em></td>
+<td>EventSource オブジェクトの last event ID の値に設定する、イベント ID です。</td>
+<td><code>&quot;813bb7b8-f626-4219-ac72-4628571f7c6a&quot;</code></td>
+</tr>
+<tr>
+<td><strong><a href="#resource-sessions">session:sa_account</a></strong></td>
+<td><em>string</em></td>
+<td>サービスオンラインのアカウント名<br/> <strong>pattern:</strong> <code>^SA[0-9]{7}$</code></td>
+<td><code>&quot;SA0000000&quot;</code></td>
+</tr>
+</tbody></table>
+
+<h3><a name="link-GET-back_sessions-/v1/back/sessions">内部向け/Sessions List</a></h3>
+
+<p>接続中のセッション一覧を表示する</p>
+
+<pre><code>GET /v1/back/sessions
+</code></pre>
+
+<h4>Curl Example</h4>
+
+<pre><code class="bash">$ curl -n http://localhost:3040/v1/back/sessions \
+  -H &quot;Authorization: Idaten {gspadmin session id}:{user account}&quot;
+</code></pre>
+
+<h4>Response Example</h4>
+
+<pre><code>HTTP/1.1 200 OK
+</code></pre>
+
+<pre><code class="json">[
+  {
+    &quot;session&quot;: {
+      &quot;id&quot;: &quot;813bb7b8-f626-4219-ac72-4628571f7c6a&quot;,
+      &quot;sa_account&quot;: &quot;SA0000000&quot;
+    }
+  }
+]
+</code></pre>
+
+<h3><a name="link-DELETE-back_sessions-/v1/back/sessions/{(%23%2Fdefinitions%2Fsessions%2Fdefinitions%2Fid)}">内部向け/Sessions Delete</a></h3>
+
+<p>接続中のセッションを切断する</p>
+
+<pre><code>DELETE /v1/back/sessions/{sessions_id}
+</code></pre>
+
+<h4>Curl Example</h4>
+
+<pre><code class="bash">$ curl -n -X DELETE http://localhost:3040/v1/back/sessions/$SESSIONS_ID \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Authorization: Idaten {gspadmin session id}:{user account}&quot;
+</code></pre>
+
+<h4>Response Example</h4>
+
+<pre><code>HTTP/1.1 200 OK
+</code></pre>
+
+<pre><code class="json">{
+  &quot;session&quot;: {
+    &quot;id&quot;: &quot;813bb7b8-f626-4219-ac72-4628571f7c6a&quot;,
+    &quot;sa_account&quot;: &quot;SA0000000&quot;
+  }
+}
+</code></pre>
+
+<h2><a name="resource-sessions">ユーザ向け/Sessions</a></h2>
+
+<p>Stability: <code>prototype</code></p>
+
+<p>セッションを管理します</p>
+
+<h3>Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>session:id</strong></td>
+<td><em>uuid</em></td>
+<td>EventSource オブジェクトの last event ID の値に設定する、イベント ID です。</td>
+<td><code>&quot;813bb7b8-f626-4219-ac72-4628571f7c6a&quot;</code></td>
+</tr>
+<tr>
+<td><strong>session:sa_account</strong></td>
+<td><em>string</em></td>
+<td>サービスオンラインのアカウント名<br/> <strong>pattern:</strong> <code>^SA[0-9]{7}$</code></td>
+<td><code>&quot;SA0000000&quot;</code></td>
+</tr>
+</tbody></table>
+
+<h3><a name="link-POST-sessions-/v1/sessions">ユーザ向け/Sessions Create</a></h3>
+
+<p>セッションを作成する</p>
+
+<pre><code>POST /v1/sessions
+</code></pre>
+
+<h4>Required Parameters</h4>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>gspcp_session</strong></td>
+<td><em>string</em></td>
+<td>gspcpが生成したセッションID</td>
+<td><code>&quot;2d2027ea322c5f8e87ac110d859f69a5&quot;</code></td>
+</tr>
+<tr>
+<td><strong>sa_account</strong></td>
+<td><em>string</em></td>
+<td>サービスオンラインのアカウント名<br/> <strong>pattern:</strong> <code>^SA[0-9]{7}$</code></td>
+<td><code>&quot;SA0000000&quot;</code></td>
+</tr>
+</tbody></table>
+
+<h4>Curl Example</h4>
+
+<pre><code class="bash">$ curl -n -X POST http://localhost:3040/v1/sessions \
+  -d &#39;{
+  &quot;sa_account&quot;: &quot;SA0000000&quot;,
+  &quot;gspcp_session&quot;: &quot;2d2027ea322c5f8e87ac110d859f69a5&quot;
+}&#39; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;X-CSRF-TOKEN: aZ1lwyA/LKokwup81tBV11P7BTbUBTISmzkd8GA==&quot;
+</code></pre>
+
+<h4>Response Example</h4>
+
+<pre><code>HTTP/1.1 201 Created
+</code></pre>
+
+<pre><code class="json">{
+  &quot;session&quot;: {
+    &quot;id&quot;: &quot;813bb7b8-f626-4219-ac72-4628571f7c6a&quot;,
+    &quot;sa_account&quot;: &quot;SA0000000&quot;
+  }
+}
+</code></pre>
+
+<h3><a name="link-GET-sessions-/v1/sessions/{(%23%2Fdefinitions%2Fsessions%2Fdefinitions%2Fid)}">ユーザ向け/Sessions Connection</a></h3>
+
+<p>ストリーム接続を開始する</p>
+
+<pre><code>GET /v1/sessions/{sessions_id}
+</code></pre>
+
+<h4>Curl Example</h4>
+
+<pre><code class="bash">$ curl -n http://localhost:3040/v1/sessions/$SESSIONS_ID \
+  -H &quot;X-CSRF-TOKEN: aZ1lwyA/LKokwup81tBV11P7BTbUBTISmzkd8GA==&quot;
+</code></pre>
+
+<h4>Response Example</h4>
+
+<pre><code> HTTP/1.1 200 OK
+ Content-Type: text/event-stream; charset=utf-8
+ Cache-Control: no-cache
+ Connection: keep-alive
+ Transfer-Encoding: chunked
+ Date: Mon, 19 Dec 2016 05:37:47 GMT 
+</code></pre>
+
+<pre><code class="json"> event: heartBeat
+ id: 813bb7b8-f626-4219-ac72-4628571f7c6a/1
+ retry: 10000
+ data: 2d2027ea322c5f8e87ac110d859f69a5 
+</code></pre>
+</body></html>

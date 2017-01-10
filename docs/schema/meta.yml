@@ -1,0 +1,8 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: gspcp-stream
+description: P2 PRI 表画面用ストリームサーバ
+id: gspcp-stream
+links:
+- href: http://localhost:3040
+  rel: self
