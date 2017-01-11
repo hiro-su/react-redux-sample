@@ -8,8 +8,9 @@ export default class UsersCtrl extends AppCtrl {
   clients = [];
 
   index() {
-    return async () => {
-      this.raise('not implemented', 404);
+    return async (ctx) => {
+      ctx.state = this.assets;
+      await ctx.render('users/index');
     };
   }
 

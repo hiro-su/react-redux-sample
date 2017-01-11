@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "bin/www",
-    "build": "webpack"
+    "build": "webpack",
+    "build_watch": "webpack --watch"
   },
   "author": "h-sugimoto",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "lodash": "^4.17.2",
     "material-ui": "^0.16.6",
     "moment": "^2.17.0",
+    "mongoose": "^4.7.6",
     "pug": "^2.0.0-beta6",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -33,7 +35,8 @@
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.7",
     "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-logger": "^2.7.4"
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.0",

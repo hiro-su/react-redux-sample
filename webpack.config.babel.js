@@ -9,17 +9,17 @@ const assetsPluginInstance = new AssetsPlugin();
 
 export default [
   {
-    entry: path.join(__dirname, 'app/assets/javascripts/application.js'),
+    entry: path.join(__dirname, 'app/assets/javascripts/application.jsx'),
     output: {
       path: path.join(__dirname, 'public', 'assets'),
       filename: `application-${moment().format('YYYYMMDD')}_[hash].js`
     },
     resolve: {
-      extensions: ['', '.js']
+      extensions: ['', '.js', '.jsx']
     },
     module: {
       loaders: [
-        { test: /\.js$/, include: [path.resolve(__dirname, 'app', 'assets', 'javascripts')], loaders: ['babel']},
+        { test: /\.js[x]?$/, include: [path.resolve(__dirname, 'app', 'assets', 'javascripts')], loaders: ['babel']},
       ]
     },
     plugins: (process.env.NODE_ENV === 'production') ? [
