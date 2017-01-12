@@ -65,8 +65,6 @@ class SearchContainer extends Component {
       isProcessing, alertMessage, poller
     } = this.props;
 
-    console.log(poller);
-
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div>
@@ -112,14 +110,16 @@ function mapStateToProps( state ){
     searchedList,
     isAddMode,
     isProcessing,
-    alertMessage
+    alertMessage,
+    poller
   } = state.rootReducer.search;
   return {
     searchWord,
     searchedList,
     isAddMode,
     isProcessing,
-    alertMessage
+    alertMessage,
+    poller
   };
 }
 

@@ -35,7 +35,7 @@ export default function search(state = {
         isProcessing: false,
         searchedList: action.searchedList,
         isAddMode: newIsAddMode,
-        poller:  false
+        poller:  action.poller
       });
     case 'FAILED_SEARCH':
       return Object.assign({}, state, {
