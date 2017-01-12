@@ -10,13 +10,14 @@ import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-rou
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import rootReducer from './reducers';
 import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
  
 const logger = createLogger();
 const baseHistory = browserHistory;
 const routingMiddleware = routerMiddleware(baseHistory);
  
 const enhancer = compose(
-  applyMiddleware(routingMiddleware, logger)
+  applyMiddleware(routingMiddleware, logger, thunkMiddleware)
 );
  
 const store = createStore(

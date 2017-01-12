@@ -1,9 +1,11 @@
+// Component
+
 import React, { Component, PropTypes } from 'react';
- 
+
 import TextField from 'material-ui/TextField';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
- 
+
 const styles = {
   registerBtn: {
     isAdd: {
@@ -14,7 +16,6 @@ const styles = {
     }
   }
 }
- 
 const Search = ({
   searchWord,
   searchedList,
@@ -38,8 +39,8 @@ const Search = ({
         <TableBody
           displayRowCheckbox={false}
         >
-          {searchedList.map( searchedData =>
-            <TableRow>
+          {searchedList.map((searchedData, i) =>
+            <TableRow key={i}>
               <TableRowColumn>{searchedData._id}</TableRowColumn>
               <TableRowColumn>{searchedData.title}</TableRowColumn>
             </TableRow>
@@ -56,7 +57,7 @@ const Search = ({
     </div>
   </div>
 )
- 
+
 Search.propTypes = {
   searchWord: PropTypes.string.isRequired,
   searchedList: PropTypes.arrayOf(PropTypes.shape({
@@ -68,5 +69,5 @@ Search.propTypes = {
   enterSearchEdit: PropTypes.func.isRequired,
   onClickRegisterBtn: PropTypes.func.isRequired
 }
- 
+
 export default Search;

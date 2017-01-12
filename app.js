@@ -7,15 +7,17 @@ import logger from 'koa-morgan';
 import bodyParser from 'koa-bodyparser';
 import moment from 'moment';
 import { router } from './config';
+import db from './app/model';
 
 const app = new Koa();
+db.connect();
 
 // set logger
 logger.token('date', format => {
   const clf = 'DD/MMM/YYYY:HH:mm:ss ZZ';
   return moment(format._startTime).format(clf);
 });
-app.use(logger('combined', { immediate: true }));
+app.use(logger('combined', { immediate: false }));
 
 // error handler
 app.use(async (ctx, next) => {

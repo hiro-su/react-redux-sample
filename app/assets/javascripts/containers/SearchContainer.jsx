@@ -1,16 +1,20 @@
+// Container
+
 import { connect } from 'react-redux';
 import React, { Component,PropTypes } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
- 
+
 import Search from '../components/Search';
 import AlertDialog from '../components/AlertDialog';
-import LoadingDialog from '../components/LoadingDialog';
+import RefreshIndicator from '../components/RefreshIndicator';
+import AllSearch from '../components/AllSearch';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
- 
+
 import * as searchActions from '../actions/search';
- 
+
 class SearchContainer extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +23,11 @@ class SearchContainer extends Component {
     this.handleEnterSearchEdit = this.handleEnterSearchEdit.bind(this);
     this.handleOnClickRegisterBtn = this.handleOnClickRegisterBtn.bind(this);
     this.handleOnClickOkBtn = this.handleOnClickOkBtn.bind(this);
+    this.handleOnClickAllSearchBtn = this.handleOnClickAllSearchBtn.bind(this);
+  }
+
+  componentDidMount() {
+    setInterval(this.handleOnClickAllSearchBtn, 2000);
   }
 
   handleChangeSearchWord(e){
@@ -43,15 +52,28 @@ class SearchContainer extends Component {
     const { searchActionBind } = this.props;
     searchActionBind.changeAlertMessage("");
   }
- 
+
+  handleOnClickAllSearchBtn() {
+    const { searchActionBind, poller } = this.props;
+    console.log(poller);
+    searchActionBind.allSearch();
+  }
+
   render() {
     const {
-      searchWord, searchedList, isAddMode, isProcessing, alertMessage
+      searchWord, searchedList, isAddMode,
+      isProcessing, alertMessage, poller
     } = this.props;
- 
+
+    console.log(poller);
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div>
+          <Link to='/helloworld'>helloworld</Link>
+          <AllSearch
+            onClickAllSearchBtn={this.handleOnClickAllSearchBtn}
+          />
           <Search
             searchWord={searchWord}
             searchedList={searchedList}
@@ -60,7 +82,7 @@ class SearchContainer extends Component {
             enterSearchEdit={this.handleEnterSearchEdit}
             onClickRegisterBtn={this.handleOnClickRegisterBtn}
           />
-          <LoadingDialog
+          <RefreshIndicator
             isLoadingOpen={isProcessing}
           />
           <AlertDialog
@@ -72,7 +94,7 @@ class SearchContainer extends Component {
     );
   }
 };
- 
+
 SearchContainer.propTypes = {
   searchWord: PropTypes.string.isRequired,
   searchedList: PropTypes.arrayOf(PropTypes.shape({
@@ -83,7 +105,7 @@ SearchContainer.propTypes = {
   isProcessing: PropTypes.bool.isRequired,
   alertMessage: PropTypes.string.isRequired
 }
- 
+
 function mapStateToProps( state ){
   const {
     searchWord,
@@ -106,7 +128,7 @@ function mapDispatchToProps( dispatch ) {
     searchActionBind: bindActionCreators(searchActions, dispatch)
   };
 }
- 
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
