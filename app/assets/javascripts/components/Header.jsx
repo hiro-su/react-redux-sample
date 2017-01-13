@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
- 
+
 import AppBar from 'material-ui/AppBar';
- 
+
 const muiTheme = getMuiTheme();
- 
+
 class Header extends React.Component {
   render() {
     return (
@@ -13,7 +13,7 @@ class Header extends React.Component {
         <div>
             <header>
               <AppBar
-                title='React + Redux Sample'
+                title='本棚'
               />
             </header>
         </div>
@@ -21,5 +21,5 @@ class Header extends React.Component {
     );
   }
 }
- 
+
 export default Header;

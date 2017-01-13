@@ -6,7 +6,8 @@ export default function search(state = {
   searchedList: [],
   alertMessage: "",
   isAddMode: false,
-  poller: true
+  poller: true,
+  searched: {}
 }, action = {}){
   switch( action.type ){
     case 'CHANGE_SEARCH_WORD':
@@ -21,7 +22,7 @@ export default function search(state = {
         poller: action.poller
       });
     case 'SUCCESS_SEARCH':
-      var newIsAddMode = true;
+      let newIsAddMode = true;
       if (state.searchWord.length <= 0) {
         newIsAddMode = false;
       }
@@ -40,6 +41,10 @@ export default function search(state = {
       });
       if (action.poller) newState.searchWord = '';
       return newState;
+    case 'SUCCESS_SEARCH_ID':
+      return Object.assign({}, state, {
+        searched: action.searched
+      });
     case 'FAILED_SEARCH':
       return Object.assign({}, state, {
         isProcessing: false,

@@ -41,6 +41,25 @@ export function search(){
   };
 }
 
+export function searchId(id) {
+  return (dispatch, getState) => {
+    return makeRequest('/find/' + id, 'post')
+      .then(response => {
+        if (response.status === 200) {
+          return dispatch({
+            type: 'SUCCESS_SEARCH_ID',
+            searched: response.data
+          });
+        } else {
+          return dispatch({
+               type: 'FAILED_SEARCH',
+               message: "検索に失敗しました。"
+             });
+        }
+      });
+  };
+}
+
 export function allSearch() {
   const searchWord = "";
   return (dispatch, getState) => {

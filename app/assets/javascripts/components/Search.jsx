@@ -1,6 +1,7 @@
 // Component
 
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 import TextField from 'material-ui/TextField';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
@@ -37,11 +38,11 @@ const Search = ({
     <div>
       <Table>
         <TableBody
-          displayRowCheckbox={false}
+          displayRowCheckbox={true}
         >
           {searchedList.map((searchedData, i) =>
             <TableRow key={i}>
-              <TableRowColumn>{searchedData._id}</TableRowColumn>
+              <TableRowColumn><Link to={"/search/"+searchedData._id}>{searchedData._id}</Link></TableRowColumn>
               <TableRowColumn>{searchedData.title}</TableRowColumn>
             </TableRow>
           )}

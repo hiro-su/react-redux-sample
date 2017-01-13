@@ -16,6 +16,7 @@ router
 
 router
   .post('/find', sample.find())
+  .post('/find/:id', sample.show())
   .post('/add', sample.add());
 
 module.exports = router;

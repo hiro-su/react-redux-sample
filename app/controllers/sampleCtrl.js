@@ -28,6 +28,14 @@ export default class SampleCtrl extends AppCtrl {
     }
   }
 
+  show() {
+    return async (ctx) => {
+      return Sample.findOne({ _id: ctx.params.id }).exec((err, sample) => {
+        return ctx.body = sample;
+      });
+    };
+  }
+
   /**
    * Add
    */

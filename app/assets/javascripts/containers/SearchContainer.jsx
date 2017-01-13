@@ -1,7 +1,7 @@
 // Container
 
 import { connect } from 'react-redux';
-import React, { Component,PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 
@@ -30,7 +30,7 @@ class SearchContainer extends Component {
     this.poller = setInterval(() => {
       const { poller } = this.props;
       if (poller) this.handleOnClickAllSearchBtn();
-    }, 2000);
+    }, 10000);
   }
 
   componentWillUnmount() {
