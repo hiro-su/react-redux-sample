@@ -27,7 +27,14 @@ class SearchContainer extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.handleOnClickAllSearchBtn, 2000);
+    this.poller = setInterval(() => {
+      const { poller } = this.props;
+      if (poller) this.handleOnClickAllSearchBtn();
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.poller);
   }
 
   handleChangeSearchWord(e){
@@ -54,8 +61,7 @@ class SearchContainer extends Component {
   }
 
   handleOnClickAllSearchBtn() {
-    const { searchActionBind, poller } = this.props;
-    console.log(poller);
+    const { searchActionBind } = this.props;
     searchActionBind.allSearch();
   }
 

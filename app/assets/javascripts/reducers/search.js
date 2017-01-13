@@ -17,30 +17,34 @@ export default function search(state = {
       });
     case 'REQUEST_PROCESS':
       return Object.assign({}, state, {
-        isProcessing: true
+        isProcessing: true,
+        poller: action.poller
       });
     case 'SUCCESS_SEARCH':
       var newIsAddMode = true;
-      if( state.searchWord.length <= 0 ){
+      if (state.searchWord.length <= 0) {
         newIsAddMode = false;
       }
       else {
-        for( var i = 0; i < action.searchedList.length; i++){
-          if( state.searchWord.toLowerCase() === action.searchedList[i].title.toLowerCase() ){
+        for (var i = 0;i < action.searchedList.length;i++) {
+          if (state.searchWord.toLowerCase() === action.searchedList[i].title.toLowerCase()) {
             newIsAddMode = false;
           }
         }
       }
-      return Object.assign({}, state, {
+      const newState = Object.assign({}, state, {
         isProcessing: false,
         searchedList: action.searchedList,
         isAddMode: newIsAddMode,
-        poller:  action.poller
+        poller: action.poller
       });
+      if (action.poller) newState.searchWord = '';
+      return newState;
     case 'FAILED_SEARCH':
       return Object.assign({}, state, {
         isProcessing: false,
-        alertMessage: action.message
+        alertMessage: action.message,
+        poller: false
       });
     case 'SUCCESS_REGISTAR':
       return Object.assign({}, state, {
@@ -48,16 +52,19 @@ export default function search(state = {
         alertMessage: "登録しました。",
         searchedList: [action.insertData],
         searchWord: "",
-        isAddMode: false
+        isAddMode: false,
+        poller: false
       });
     case 'FAILED_REGISTAR':
       return Object.assign({}, state, {
         isProcessing: false,
-        alertMessage: action.message
+        alertMessage: action.message,
+        poller: false
       });
     case 'CHANGE_ALERT_MESSAGE':
       return Object.assign({}, state, {
-        alertMessage: action.message
+        alertMessage: action.message,
+        poller: false
       });
     default:
       return state;

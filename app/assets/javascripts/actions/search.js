@@ -44,7 +44,7 @@ export function search(){
 export function allSearch() {
   const searchWord = "";
   return (dispatch, getState) => {
-    dispatch({ type: 'REQUEST_PROCESS', poller: false });
+    dispatch({ type: 'REQUEST_PROCESS', poller: true });
     return makeRequest('/find', 'post', { searchWord })
       .then(response => {
         if (response.status === 200) {
