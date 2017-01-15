@@ -27,6 +27,8 @@ class SearchContainer extends Component {
   }
 
   componentDidMount() {
+    this.handleOnClickAllSearchBtn();
+
     this.poller = setInterval(() => {
       const { poller } = this.props;
       if (poller) this.handleOnClickAllSearchBtn();

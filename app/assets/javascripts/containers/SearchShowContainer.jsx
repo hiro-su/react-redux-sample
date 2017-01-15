@@ -54,6 +54,7 @@ class SearchShowContainer extends Component {
               <TableRow>
                 <TableRowColumn>{searched._id}</TableRowColumn>
                 <TableRowColumn>{searched.title}</TableRowColumn>
+                <TableRowColumn>{searched.created}</TableRowColumn>
               </TableRow>
             </TableBody>
           </Table>

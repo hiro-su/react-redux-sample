@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, NotFound } from 'react-router';
 
 import App from './components/App';
 import HelloWolrd from './components/HelloWorld';
