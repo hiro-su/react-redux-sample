@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, NotFound } from 'react-router';
+import { Route, NotFound, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import HelloWolrd from './components/HelloWorld';
@@ -10,6 +10,7 @@ export default (store) => {
 
   return (
     <Route path="/" component={App}>
+      <IndexRoute component={SearchContainer}/>
       <Route path="helloworld" component={HelloWolrd}/>
       <Route path="search" component={SearchContainer}/>
       <Route path="search/:id" component={SearchShowContainer}/>

@@ -1,6 +1,7 @@
 // action
 
 import request from 'axios';
+import { browserHistory } from 'react-router';
 
 export function changeSearchWord( searchWord ){
   return {
@@ -75,6 +76,21 @@ export function allSearch() {
         }
       })
   }
+}
+
+export function deleteSample(id) {
+  return (dispatch, getState) => {
+    return makeRequest('/find/' + id, 'delete')
+      .then(response => {
+        if (response.status === 200) {
+          dispatch({
+            type: 'SUCCESS_DELETE',
+            message: '削除に成功しました',
+          });
+          return browserHistory.push('/search');
+        }
+      });
+  };
 }
 
 export function registarSearchWord(){

@@ -38,7 +38,7 @@ const Search = ({
     <div>
       <Table>
         <TableBody
-          displayRowCheckbox={true}
+          displayRowCheckbox={false}
         >
           {searchedList.map((searchedData, i) =>
             <TableRow key={i}>

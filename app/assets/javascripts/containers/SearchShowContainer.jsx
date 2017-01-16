@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 
 import AlertDialog from '../components/AlertDialog';
@@ -10,7 +10,8 @@ import AlertDialog from '../components/AlertDialog';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import * as searchActions from '../actions/search';
 
@@ -19,9 +20,10 @@ class SearchShowContainer extends Component {
     super(props);
 
     this.handleOnClickOkBtn = this.handleOnClickOkBtn.bind(this);
+    this.handleOnClickDeleteBtn = this.handleOnClickDeleteBtn.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.handleSearchSample();
   }
 
@@ -33,6 +35,11 @@ class SearchShowContainer extends Component {
   handleOnClickOkBtn() {
     const { searchActionBind } = this.props;
     searchActionBind.changeAlertMessage("");
+  }
+
+  handleOnClickDeleteBtn() {
+    const { searchActionBind, id } = this.props;
+    searchActionBind.deleteSample(id);
   }
 
   render() {
@@ -50,11 +57,26 @@ class SearchShowContainer extends Component {
             onCloseDialog={this.handleOnClickOkBtn}
           />
           <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHeaderColumn>ID</TableHeaderColumn>
+                <TableHeaderColumn>タイトル</TableHeaderColumn>
+                <TableHeaderColumn>作成日時</TableHeaderColumn>
+                <TableHeaderColumn>操作</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
             <TableBody displayRowCheckBox={false}>
               <TableRow>
                 <TableRowColumn>{searched._id}</TableRowColumn>
                 <TableRowColumn>{searched.title}</TableRowColumn>
                 <TableRowColumn>{searched.created}</TableRowColumn>
+                <TableRowColumn>
+                  <RaisedButton
+                    label="削除"
+                    secondary={true}
+                    onClick={this.handleOnClickDeleteBtn}
+                  />
+                </TableRowColumn>
               </TableRow>
             </TableBody>
           </Table>

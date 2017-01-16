@@ -7,7 +7,8 @@ export default function search(state = {
   alertMessage: "",
   isAddMode: false,
   poller: true,
-  searched: {}
+  searched: {},
+  isDeleted: false
 }, action = {}){
   switch( action.type ){
     case 'CHANGE_SEARCH_WORD':
@@ -41,6 +42,10 @@ export default function search(state = {
       });
       if (action.poller) newState.searchWord = '';
       return newState;
+    case 'SUCCESS_DELETE':
+      return Object.assign({}, state, {
+        alertMessage: action.message
+      });
     case 'SUCCESS_SEARCH_ID':
       return Object.assign({}, state, {
         searched: action.searched

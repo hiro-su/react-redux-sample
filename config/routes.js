@@ -16,6 +16,7 @@ router
 
 router
   .post('/find', sample.find())
+  .del('/find/:id', sample.delete())
   .post('/find/:id', sample.show())
   .post('/add', sample.add());
 

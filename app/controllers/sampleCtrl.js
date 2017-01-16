@@ -36,6 +36,14 @@ export default class SampleCtrl extends AppCtrl {
     };
   }
 
+  delete() {
+    return async (ctx) => {
+      return Sample.remove({ _id: ctx.params.id }).exec((err, sample) => {
+        return ctx.body = sample;
+      });
+    };
+  }
+
   /**
    * Add
    */
