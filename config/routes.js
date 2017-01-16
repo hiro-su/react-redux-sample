@@ -11,8 +11,6 @@ const sample = new SampleCtrl();
 
 router
   .get('*', users.index());
-  //.get( '/users', users.index())
-  //.get( '/users/:id', users.show());
 
 router
   .post('/find', sample.find())
