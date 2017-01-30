@@ -12,7 +12,7 @@ export default [
     entry: path.join(__dirname, 'app/assets/javascripts/application.jsx'),
     output: {
       path: path.join(__dirname, 'public', 'assets'),
-      filename: `application-${moment().format('YYYYMMDD')}_[hash].js`
+      filename: createAssets('js')
     },
     resolve: {
       extensions: ['', '.js', '.jsx']
@@ -35,7 +35,7 @@ export default [
     entry: path.join(__dirname, 'app/assets/stylesheets/application.scss'),
     output: {
       path: path.join(__dirname, 'public', 'assets'),
-      filename: `application-${moment().format('YYYYMMDD')}_[hash].css`
+      filename: createAssets('css')
     },
     module: {
       loaders: [
@@ -66,7 +66,10 @@ function defineConstants() {
 }
 
 function extractText(ext) {
-  return new ExtractTextPlugin(
-    `application-${moment().format('YYYYMMDD')}_[hash].${ext}`
-  );
+  return new ExtractTextPlugin(createAssets(ext));
+}
+
+function createAssets(ext) {
+  return (process.env.NODE_ENV === 'production') ?
+    `application-${moment().format('YYYYMMDD')}_[hash].${ext}` : `application.${ext}`;
 }

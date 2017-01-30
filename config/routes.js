@@ -3,11 +3,10 @@
 import Router from 'koa-router';
 const router = Router();
 
-import UsersCtrl from '../app/controllers/usersCtrl';
-import SampleCtrl from '../app/controllers/sampleCtrl';
+import ctrl from '../app/controllers';
 
-const users = new UsersCtrl();
-const sample = new SampleCtrl();
+const users = new ctrl.Users();
+const sample = new ctrl.Sample();
 
 router
   .get('*', users.index());

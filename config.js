@@ -10,4 +10,5 @@ function detectSettings() {
   return `./config/settings/${process.env.NODE_ENV}.yml`;
 }
 
+export default { router, settings };
 export { router, settings };

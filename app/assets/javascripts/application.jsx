@@ -3,39 +3,28 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+import { Router } from 'react-router';
 
 import createRoute from './routes';
-import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import rootReducer from './reducers';
-import createLogger from 'redux-logger';
-import thunkMiddleware from 'redux-thunk';
+import { syncHistoryWithStore } from 'react-router-redux'; import store, { baseHistory } from './store';
 
 //allow react dev tools work
 window.React = React;
 
-const logger = createLogger();
-const baseHistory = browserHistory;
-const routingMiddleware = routerMiddleware(baseHistory);
-
-const enhancer = compose(
-  applyMiddleware(routingMiddleware, logger, thunkMiddleware)
-);
-
-const store = createStore(
-  combineReducers({rootReducer, routing: routerReducer}),
-  enhancer
-);
+const routes = createRoute;
 
 const history = syncHistoryWithStore(baseHistory, store);
-const routes = createRoute(store);
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 ReactDOM.render(
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Provider store={store}>
       <Router history={history}>
         {routes}
       </Router>
-    </Provider>,
-    document.getElementById('main')
+    </Provider>
+  </MuiThemeProvider>,
+  document.getElementById('main')
 );

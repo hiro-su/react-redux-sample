@@ -28,6 +28,7 @@ const Search = ({
   <div>
     <div>
       <TextField
+        id="search"
         hintText="検索ワード"
         floatingLabelText="Enterで検索"
         value={ searchWord }

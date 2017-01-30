@@ -10,9 +10,6 @@ import AlertDialog from '../components/AlertDialog';
 import RefreshIndicator from '../components/RefreshIndicator';
 import AllSearch from '../components/AllSearch';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import * as searchActions from '../actions/search';
 
 class SearchContainer extends Component {
@@ -74,29 +71,27 @@ class SearchContainer extends Component {
     } = this.props;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <div>
-          <Link to='/helloworld'>helloworld</Link>
-          <AllSearch
-            onClickAllSearchBtn={this.handleOnClickAllSearchBtn}
-          />
-          <Search
-            searchWord={searchWord}
-            searchedList={searchedList}
-            isAddMode={isAddMode}
-            onChangeSearchWord={this.handleChangeSearchWord}
-            enterSearchEdit={this.handleEnterSearchEdit}
-            onClickRegisterBtn={this.handleOnClickRegisterBtn}
-          />
-          <RefreshIndicator
-            isLoadingOpen={isProcessing}
-          />
-          <AlertDialog
-            message={alertMessage}
-            onCloseDialog={this.handleOnClickOkBtn}
-          />
-        </div>
-      </MuiThemeProvider>
+      <div>
+        <Link to='/helloworld'>helloworld</Link>
+        <AllSearch
+          onClickAllSearchBtn={this.handleOnClickAllSearchBtn}
+        />
+        <Search
+          searchWord={searchWord}
+          searchedList={searchedList}
+          isAddMode={isAddMode}
+          onChangeSearchWord={this.handleChangeSearchWord}
+          enterSearchEdit={this.handleEnterSearchEdit}
+          onClickRegisterBtn={this.handleOnClickRegisterBtn}
+        />
+        <RefreshIndicator
+          isLoadingOpen={isProcessing}
+        />
+        <AlertDialog
+          message={alertMessage}
+          onCloseDialog={this.handleOnClickOkBtn}
+        />
+      </div>
     );
   }
 };

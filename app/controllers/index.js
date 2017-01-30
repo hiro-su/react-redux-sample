@@ -1,7 +1,5 @@
 import Sample from './sampleCtrl';
+import Users from './usersCtrl';
  
-export { Sample };
- 
-export default {
-  Sample
-};
+export { Sample, Users };
+export default { Sample, Users };

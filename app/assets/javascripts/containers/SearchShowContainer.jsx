@@ -14,9 +14,7 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as searchActions from '../actions/search';
-
-class SearchShowContainer extends Component {
-  constructor(props) {
+class SearchShowContainer extends Component { constructor(props) {
     super(props);
 
     this.handleOnClickOkBtn = this.handleOnClickOkBtn.bind(this);
@@ -49,39 +47,37 @@ class SearchShowContainer extends Component {
     } = this.props;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <div>
-          <Link to='/search'>検索画面</Link>
-          <AlertDialog
-            message={alertMessage}
-            onCloseDialog={this.handleOnClickOkBtn}
-          />
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHeaderColumn>ID</TableHeaderColumn>
-                <TableHeaderColumn>タイトル</TableHeaderColumn>
-                <TableHeaderColumn>作成日時</TableHeaderColumn>
-                <TableHeaderColumn>操作</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckBox={false}>
-              <TableRow>
-                <TableRowColumn>{searched._id}</TableRowColumn>
-                <TableRowColumn>{searched.title}</TableRowColumn>
-                <TableRowColumn>{searched.created}</TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton
-                    label="削除"
-                    secondary={true}
-                    onClick={this.handleOnClickDeleteBtn}
-                  />
-                </TableRowColumn>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
-      </MuiThemeProvider>
+      <div>
+        <Link to='/search'>検索画面</Link>
+        <AlertDialog
+          message={alertMessage}
+          onCloseDialog={this.handleOnClickOkBtn}
+        />
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>ID</TableHeaderColumn>
+              <TableHeaderColumn>タイトル</TableHeaderColumn>
+              <TableHeaderColumn>作成日時</TableHeaderColumn>
+              <TableHeaderColumn>操作</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckBox={false}>
+            <TableRow>
+              <TableRowColumn>{searched._id}</TableRowColumn>
+              <TableRowColumn>{searched.title}</TableRowColumn>
+              <TableRowColumn>{searched.created}</TableRowColumn>
+              <TableRowColumn>
+                <RaisedButton
+                  label="削除"
+                  secondary={true}
+                  onClick={this.handleOnClickDeleteBtn}
+                />
+              </TableRowColumn>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
     );
   }
 }

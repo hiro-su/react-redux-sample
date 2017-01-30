@@ -7,13 +7,11 @@ const style = {
 
 const component = (props) => {
   return (
-    <div>
-      <RaisedButton
-        label="全検索"
-        style={style}
-        onClick={props.onClickAllSearchBtn}
-      />
-    </div>
+    <RaisedButton
+      label="全検索"
+      style={style}
+      onClick={props.onClickAllSearchBtn}
+    />
   )
 };
 

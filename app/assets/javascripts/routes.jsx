@@ -1,19 +1,24 @@
 import React from 'react';
-import { Route, NotFound, IndexRoute } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import HelloWolrd from './components/HelloWorld';
-import SearchContainer from './containers/SearchContainer';
-import SearchShowContainer from './containers/SearchShowContainer';
+import containers, { SearchContainer } from './containers';
+//import SearchContainer from './containers/SearchContainer';
+//import SearchShowContainer from './containers/SearchShowContainer';
+import NotFound from './components/NotFound';
 
-export default (store) => {
+export default (
+  <Route path="/" component={App}>
+    { /* Home (main) route */ }
+    <IndexRoute component={containers.Search}/>
 
-  return (
-    <Route path="/" component={App}>
-      <IndexRoute component={SearchContainer}/>
-      <Route path="helloworld" component={HelloWolrd}/>
-      <Route path="search" component={SearchContainer}/>
-      <Route path="search/:id" component={SearchShowContainer}/>
-    </Route>
-  );
-};
+    { /* Routes */ }
+    <Route path="helloworld" component={HelloWolrd}/>
+    <Route path="search" component={containers.Search}/>
+    <Route path="search/:id" component={containers.SearchShow}/>
+
+    { /* Catch all route */ }
+    <Route path="*" component={NotFound} status={404}/>
+  </Route>
+);
