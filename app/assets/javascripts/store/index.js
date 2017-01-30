@@ -20,6 +20,4 @@ const store = createStore(
   enhancer
 );
 
-//export const history = syncHistoryWithStore(baseHistory, store);
-
 export default store;

@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 
 import createRoute from './routes';
-import { syncHistoryWithStore } from 'react-router-redux'; import store, { baseHistory } from './store';
+import { syncHistoryWithStore } from 'react-router-redux';
+import store, { baseHistory } from './store';
 
 //allow react dev tools work
 window.React = React;

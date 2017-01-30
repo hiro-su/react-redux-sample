@@ -3,9 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import HelloWolrd from './components/HelloWorld';
-import containers, { SearchContainer } from './containers';
-//import SearchContainer from './containers/SearchContainer';
-//import SearchShowContainer from './containers/SearchShowContainer';
+import containers from './containers';
 import NotFound from './components/NotFound';
 
 export default (
