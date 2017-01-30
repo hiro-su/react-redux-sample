@@ -11,6 +11,7 @@ const ResultDialog = ({
       <RaisedButton
         label="OK"
         primary={true}
+        keyboardFocused={true}
         onTouchTap={onCloseDialog}
       />,
     ]}
