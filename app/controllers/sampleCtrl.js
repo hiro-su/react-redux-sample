@@ -2,7 +2,6 @@
 
 import AppCtrl from './appCtrl';
 import { Sample } from '../model';
-import { getForwardMatchString } from './concerns';
 
 const sample = new Sample();
 
