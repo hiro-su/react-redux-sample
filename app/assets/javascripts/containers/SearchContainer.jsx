@@ -99,7 +99,7 @@ class SearchContainer extends Component {
 SearchContainer.propTypes = {
   searchWord: PropTypes.string.isRequired,
   searchedList: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired
   })).isRequired,
   isAddMode: PropTypes.bool.isRequired,

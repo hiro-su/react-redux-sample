@@ -43,7 +43,7 @@ const Search = ({
         >
           {searchedList.map((searchedData, i) =>
             <TableRow key={i}>
-              <TableRowColumn><Link to={"/search/"+searchedData._id}>{searchedData._id}</Link></TableRowColumn>
+              <TableRowColumn><Link to={"/search/"+searchedData.id}>{searchedData.id}</Link></TableRowColumn>
               <TableRowColumn>{searchedData.title}</TableRowColumn>
             </TableRow>
           )}
@@ -63,7 +63,7 @@ const Search = ({
 Search.propTypes = {
   searchWord: PropTypes.string.isRequired,
   searchedList: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired
   })).isRequired,
   isAddMode: PropTypes.bool.isRequired,

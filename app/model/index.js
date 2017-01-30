@@ -1,9 +1,6 @@
-import connect from './concerns/connect';
-import controllers from '../controllers';
+import Connect from './concerns/connect';
+import Sample from './sample';
  
-export { connect, controllers };
+export { Sample };
  
-export default {
- connect,
- controllers
-};
+export default Connect();

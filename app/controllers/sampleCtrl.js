@@ -1,28 +1,21 @@
 'use strict';
 
 import AppCtrl from './appCtrl';
-import Sample from '../model/sample';
+import { Sample } from '../model';
 import { getForwardMatchString } from './concerns';
+
+const sample = new Sample();
 
 export default class SampleCtrl extends AppCtrl {
   find() {
     return async (ctx) => {
-      let searchcondition = {};
-      // check sql injection
+      let searchcondition;
       if( typeof ctx.request.body.searchWord === "string" ){
-        searchcondition = {
-          title: getForwardMatchString(ctx.request.body.searchWord)
-        };
+        searchcondition = ctx.request.body.searchWord;
       } else {
         return ctx.status = 500;
       }
-      return Sample.find(searchcondition).exec((err, sampleList) => {
-        if (err) {
-          console.log('sampleController/find error');
-          console.log(err);
-          return ctx.status = 500;
-        }
-
+      return sample.find(searchcondition).then((sampleList) => {
         return ctx.body = {sampleList};
       });
     }
@@ -30,39 +23,27 @@ export default class SampleCtrl extends AppCtrl {
 
   show() {
     return async (ctx) => {
-      return Sample.findOne({ _id: ctx.params.id }).exec((err, sample) => {
-        return ctx.body = sample;
+      return sample.findOne(ctx.params.id).then((row) => {
+        return ctx.body = row;
       });
     };
   }
 
   delete() {
     return async (ctx) => {
-      return Sample.remove({ _id: ctx.params.id }).exec((err, sample) => {
-        return ctx.body = sample;
+      return sample.remove(ctx.params.id).then((res) => {
+        return ctx.body = res;
       });
     };
   }
 
-  /**
-   * Add
-   */
   add() {
     return async (ctx) => {
-      const tmpInsertData = new Sample({
-        title: ctx.request.body.title
-      });
+      const insertData = await sample.add(ctx.request.body.title);
+      console.log(insertData);
 
-      return tmpInsertData.save((saveErr) => {
-        if (saveErr){
-          console.log("sampleController/add saveErr");
-          console.log(saveErr);
-          return ctx.status = 500;
-        }
-        tmpInsertData.isUpdate = false;
-        ctx.status = 200;
-        return ctx.body = { insertData: tmpInsertData };
-      });
-    }
+      ctx.status = 200;
+      return ctx.body = { insertData: insertData };
+    };
   }
 }

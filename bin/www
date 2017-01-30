@@ -7,7 +7,7 @@
 require('babel-core/register');
 require('babel-polyfill');
 
-const app      = require('../app'),
+const app      = require('../index'),
       settings = require('../config').settings,
       http     = require('http'),
       path     = require('path'),

@@ -64,7 +64,7 @@ class SearchShowContainer extends Component { constructor(props) {
           </TableHeader>
           <TableBody displayRowCheckBox={false}>
             <TableRow>
-              <TableRowColumn>{searched._id}</TableRowColumn>
+              <TableRowColumn>{searched.id}</TableRowColumn>
               <TableRowColumn>{searched.title}</TableRowColumn>
               <TableRowColumn>{searched.created}</TableRowColumn>
               <TableRowColumn>

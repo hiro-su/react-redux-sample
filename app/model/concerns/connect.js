@@ -1,20 +1,20 @@
-import mongoose from 'mongoose';
- 
+import sqlite3 from 'sqlite3';
+sqlite3.verbose();
+
+const db = new sqlite3.Database(':memory:');
+db.serialize();
+
 export default () => {
-  const connect = () => {
-    const DB_URI = 'mongodb://localhost/ReactReduxSample';
-    mongoose.connect(DB_URI, (err) => {
-      if (err) {
-        console.log(`===>  Error connecting to ${DB_URI}`);
-        console.log(`Reason: ${err}`);
-      } else {
-        console.log(`===>  Succeeded in connecting to ${DB_URI}`);
-      }
-    });
-  };
-  connect();
- 
-  mongoose.connection.on('error', console.log);
-  mongoose.connection.on('disconnected', connect);
- 
+  db.on('error', (err) => {
+    if (err) throw err;
+  });
+
+  db.run(
+    "CREATE TABLE IF NOT EXISTS sample ("
+      + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      + "title TEXT NOT NULL ,"
+      + "created TEXT NOT NULL)"
+  );
 };
+
+export { db };

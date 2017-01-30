@@ -7,10 +7,9 @@ import logger from 'koa-morgan';
 import bodyParser from 'koa-bodyparser';
 import moment from 'moment';
 import { router } from './config';
-import db from './app/model';
+import Connect from './app/model';
 
 const app = new Koa();
-db.connect();
 
 // set logger
 logger.token('date', format => {
